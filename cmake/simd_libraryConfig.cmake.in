@@ -1,0 +1,20 @@
+@PACKAGE_INIT@
+
+# SIMD Library Configuration File
+include(CMakeFindDependencyMacro)
+
+if(@SIMD_ENABLE_OPENMP@)
+    find_dependency(OpenMP REQUIRED)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/simd_libraryTargets.cmake")
+
+if(NOT TARGET simd::simd_library)
+    add_library(simd::simd_library ALIAS simd_library)
+endif()
+
+set(SIMD_LIBRARY_VERSION "@PROJECT_VERSION@")
+set(SIMD_LIBRARY_OPENMP_ENABLED @SIMD_ENABLE_OPENMP@)
+set(SIMD_LIBRARY_V2_ENABLED @SIMD_USE_V2@)
+
+check_required_components(simd_library)
